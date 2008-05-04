@@ -1,0 +1,9 @@
+* Documentation
+* Support Full API
+* Catch 404's when searching for non existant MBID
+* Use a "real" memoize instead of the current quick hack
+* Add a method to grab multiple includes for an instantiated object to reduce memory traffic. artist.load_includes(%W(url-rels track-rels)) or something...
+--------------
+* Global overridable :limit
+* Typecast integers...like duration
+* Typecast dates...begin/end

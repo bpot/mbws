@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+mbws_lib = File.dirname(__FILE__) + '/../lib/mbws'
+exec "irb -r ../lib/mbws.rb -r setup.rb --simple-prompt"

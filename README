@@ -1,0 +1,44 @@
+= MBWS
+
+MBWS is a Ruby library for accessing MusicBrainz's (http://www.musicbrainz.org) XML Web Service. This library is currently in development, it is missing some features and is lacking a lot of documention.
+
+== Introduction
+
+MusicBrainz's Web Service (http://musicbrainz.org/doc/XMLWebService) offers four resources Artist, Label, Release, and Track. You can access each object individually by their MBID (unique identifier) or you can search each resource as a collection either by specific parameters (name,date, title, etc.) or with a lucene query (http://musicbrainz.org/doc/TextSearchSyntax).
+
+When accessing a specific object by its MBID you can also have the query return extra information (an artist's releases, a release's tracks and so on).
+
+Access to these resources is provided by matching Ruby classes: MBWS::Artist, MBWS::Release, MBWS::Track, and MBWS::Label.
+
+== Usage
+
+=== Finding an individual object
+
+If you know an object's MBID you can find it directly.
+
+  artist = Artist.find("c0b2500e-0cef-4130-869d-732b23ed9df5")
+
+You can also include extended information. For example, if you want to returnan artist's aliases and their 'Official' single artist albums.
+
+  artist = Artist.find("c0b2500e-0cef-4130-869d-732b23ed9df5",:inc => [:aliases, :sa-Official])
+
+=== Searching a collection
+
+You can search for an object, in this case the class will return an array.
+
+  releases = Release.find(:title => "Hour", :artist => "Jaw")
+
+It is also possible to use a text search using the lucene query syntax.
+
+  releases = Release.find(:query => '"the understanding" AND artist:royksopp')
+
+This type of search is describe here http://musicbrainz.org/doc/TextSearchSyntax. Note that when using either of these search methods, it is not possible to include extended information via the :inc parameter. Also, all other parameters are ignored if the query parameter is set.
+
+=== Relations between objects
+
+The classes are related (hopefully) as you would expect. For example, you can retrieve all of an artists's releases from an artist object.
+
+  artist = Artist.find("c0b2500e-0cef-4130-869d-732b23ed9df5")
+  releases = @artist.releases
+
+Further documentation can be found in each Classes individual documentation: MBWS::Artist, MBWS::Release, MBWS::Label.
