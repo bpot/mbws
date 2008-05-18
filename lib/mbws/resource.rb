@@ -101,49 +101,17 @@ module MBWS #:nodoc:
       @artist = Artist.new(xml["artist"][0])
     end
 
-    def parse_url_rels(xml)
-      if xml["relation-list"]
-        @url_rels = UrlRelations.new(xml["relation-list"]["Url"])
-      else
-        @url_rels = UrlRelations.new
-      end
+    [:track, :artist, :release, :label, :url].each do |symbol|
+      class_eval(<<-EVAL,__FILE__,__LINE__)
+        def parse_#{symbol}_rels(xml)
+          if xml["relation-list"] && xml["relation-list"]["#{symbol.to_s.capitalize}"]
+            @#{symbol}_rels = 
+              #{symbol.to_s.capitalize}Relations.new(xml["relation-list"]["#{symbol.to_s.capitalize}"])  
+          else
+            @#{symbol}_rels = #{symbol.to_s.capitalize}Relations.new
+          end
+        end
+      EVAL
     end
-    
-    def parse_track_rels(xml)
-      if xml["relation-list"]
-        @track_rels = 
-            TrackRelations.new(xml["relation-list"]["Track"])  
-      else
-        @track_rels = TrackRelations.new
-      end
-    end
-    
-    def parse_artist_rels(xml)
-      if xml["relation-list"]
-        @artist_rels = 
-            ArtistRelations.new(xml["relation-list"]["Artist"])  
-      else
-        @artist_rels = ArtistRelations.new
-      end
-    end
-    
-    def parse_release_rels(xml)
-      if xml["relation-list"]
-        @release_rels = 
-            ReleaseRelations.new(xml["relation-list"]["Release"])  
-      else
-        @release_rels = ReleaseRelations.new
-      end
-    end
-    
-    def parse_label_rels(xml)
-      if xml["relation-list"]
-        @label_rels = 
-            LabelRelations.new(xml["relation-list"]["Label"])  
-      else
-        @label_rels = LabelRelations.new
-      end
-    end
-    
   end
 end
