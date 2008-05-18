@@ -38,18 +38,17 @@ namespace :dist do
     s.version           = Gem::Version.new(MBWS::Version)
     s.summary           = "Client library for MusicBrainz's XML API"
     s.description       = s.summary
-    s.email             = 'potterr@southwestern.edu'
+    s.email             = 'bobby.potter@gmail.com'
     s.author            = 'Bobby Potter'
     s.has_rdoc          = true
     s.extra_rdoc_files  = %w(README COPYING INSTALL)
     s.homepage          = 'http://mbws.rubyforge.org'
     s.rubyforge_project = 'mbws'
     s.files             = FileList['Rakefile', 'lib/**/*.rb', 'bin/*', 'support/**/*.rb']
-    #s.executables       << 's3sh'
     s.test_files        = Dir['test/**/*']
     
     s.add_dependency 'xml-simple'
-    s.rdoc_options  = ['--title', "AWS::S3 -- Support for MusicBrainz's XML api",
+    s.rdoc_options  = ['--title', "MBWS -- Support for MusicBrainz's XML api",
                        '--main',  'README',
                        '--line-numbers', '--inline-source']
   end
